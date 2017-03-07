@@ -48,7 +48,7 @@ public class UrlServiceImpl implements UrlService {
          }
 
          // merge urlInfo1 and urlInfo2
-         infoToBeSaved = merge(urlInfo1, urlInfo2);
+         infoToBeSaved = merge(url, urlInfo1, urlInfo2);
          dao.insert(infoToBeSaved);
       }else{
          infoToBeSaved = urlInfo.get();
@@ -69,7 +69,11 @@ public class UrlServiceImpl implements UrlService {
       return dao.find(url);
    }
 
-   private UrlInfo merge(UrlInfo info1, UrlInfo info2){
+   private UrlInfo merge(String url, UrlInfo info1, UrlInfo info2){
+      info1.setUrl(url);
+      if(info2 == null){
+         return info1;
+      }
       info1.setTitle(info1.getTitle() != null ? info1.getTitle() : info2.getTitle());
       info1.setAuthor(info1.getAuthor() != null ? info1.getAuthor() : info2.getAuthor());
       info1.setDesc(info1.getDesc() != null ? info1.getDesc() : info2.getDesc());
